@@ -25,4 +25,15 @@ def modify_model(name, key=None, value=None):
         print(re_string)
 
 
-modify_model("工单流程", "type", ["1", "2", "3"])
+def replace_model(name, dic):
+    res = {}
+    res[name] = dic
+    # models[name] = dic
+    with open("./models_copy.py", 'w+', encoding='utf-8') as f:
+        # f.write(str(models))
+        f.write(str(res))
+        f.close()
+
+
+# replace_model("1c11c", "{}")
+# modify_model("工单流程", "type", ["1", "2", "3"])
