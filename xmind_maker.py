@@ -33,11 +33,12 @@ class XmindMaker:
 
 def sub_topic_title(cont, dic):
     for i in cont['topics']:
-        if i['title'] in ['special', 'asd']:
-            dic[i['title']] = []
-            if "topics" in i:
-                for j in i['topics']:
-                    dic[i['title']].append(j['title'])
+        if 'note' in i:
+            if 'list' in i['note']:
+                dic[i['title']] = []
+                if "topics" in i:
+                    for j in i['topics']:
+                        dic[i['title']].append(j['title'])
         else:
             dic[i['title']] = {}
             if "topics" in i:
@@ -46,7 +47,8 @@ def sub_topic_title(cont, dic):
 
 # a = XmindMaker('test.xmind', 'test.xmind')
 # t1 = a.add_topic(parent_topic='root')
-# a.add_topic(parent_topic=t1, title='测试节点2')
+# d = a.add_topic(parent_topic=t1, title='测试节点2')
+# d.getNotes()
 # a.xmind_save()
 # final_dict = {}
 # content = xmindparser.xmind_to_dict('title.xmind')

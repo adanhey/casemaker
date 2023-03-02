@@ -1,6 +1,3 @@
-list_index = ['type']
-
-
 models = {
     '员工管理': {
         'type': {'interface_setting': {}, 'web_client': {}},
@@ -101,4 +98,7 @@ models = {
             'create': {}, 'update': {}, 'delete': {}, 'list': {}},
         'special': ['特征测试点1', '特征测试点2']
     },
+    '替换模块名称': {'type': {'server_side_logic': {'outside_server': []}}, 'quote': {'员工管理': {}},
+                     'quoted': {'工单流程-创建工单': {'1': {'2': {}}}}, 'interface': {},
+                     'special': {'safsdf': {}, '正常V型就是不知道可加': {}}}
 }
