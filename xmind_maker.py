@@ -1,5 +1,6 @@
 import xmind
 import xmindparser
+from translate_index import translate_dict
 
 
 class XmindMaker:
@@ -16,6 +17,10 @@ class XmindMaker:
         else:
             topic = parent_topic.addSubTopic()
         if title:
+            for k, v in translate_dict.items():
+                if title == k:
+                    title = v
+                    break
             topic.setTitle(title)
         return topic
 
@@ -28,7 +33,7 @@ class XmindMaker:
 
 def sub_topic_title(cont, dic):
     for i in cont['topics']:
-        if i['title'] in ['special','asd']:
+        if i['title'] in ['special', 'asd']:
             dic[i['title']] = []
             if "topics" in i:
                 for j in i['topics']:
@@ -39,12 +44,11 @@ def sub_topic_title(cont, dic):
                 sub_topic_title(i, dic[i['title']])
     return dic
 
-
 # a = XmindMaker('test.xmind', 'test.xmind')
 # t1 = a.add_topic(parent_topic='root')
 # a.add_topic(parent_topic=t1, title='测试节点2')
 # a.xmind_save()
-final_dict = {}
-content = xmindparser.xmind_to_dict('title.xmind')
-print(content)
-print(sub_topic_title(content[0]['topic'], final_dict))
+# final_dict = {}
+# content = xmindparser.xmind_to_dict('title.xmind')
+# print(content)
+# print(sub_topic_title(content[0]['topic'], final_dict))

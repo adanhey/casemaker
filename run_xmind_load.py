@@ -1,6 +1,5 @@
 import xmindparser
 from models_update import replace_model
-
 from xmind_maker import sub_topic_title
 
 final_dict = {}
