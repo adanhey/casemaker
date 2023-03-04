@@ -7,8 +7,7 @@ models = {
         'quoted': {
             '工单配置-流程节点': []
         },
-        'interface': {
-            'create': {'custom_field': []}, 'update': {}, 'delete': {}, 'list': {}},
+        'interface': ["akjsgdfjhg"],
         'special': ['特征测试点1', '特征测试点2']
     },
     '工单配置-流程节点': {
@@ -61,7 +60,7 @@ models = {
             'app_client': {
                 'pages': {
                     '工单配置': {
-                        'app_view': [],
+                        'app_view': ["*注意产品列表名称与web不一致"],
                         'app_model': [],
                         'app_presenter': []
                     }
@@ -74,8 +73,7 @@ models = {
         'quoted': {
             '工单流程-创建工单': ['节点配置写入工单']
         },
-        'interface': {
-            'create': {}, 'update': {}, 'delete': {}, 'list': {}},
+        'interface': ['asfgasdjfghj'],
         'special': ['特征测试点1', '特征测试点2']
     },
     '工单流程-创建工单': {
@@ -94,8 +92,7 @@ models = {
         'quoted': {
             '工单流程-指派工单': []
         },
-        'interface': {
-            'create': {}, 'update': {}, 'delete': {}, 'list': {}},
+        'interface': ["kasjdhkjh"],
         'special': ['特征测试点1', '特征测试点2']
     },
     '替换模块名称': {'type': {'server_side_logic': {'outside_server': []}}, 'quote': {'员工管理': {}},

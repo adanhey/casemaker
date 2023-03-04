@@ -1,39 +1,56 @@
-import os
-from models import *
+from dict_dir.models import *
+from dict_dir.translate_index import *
+import xmindparser
 
 
-def modify_model(name, key=None, value=None):
-    dic = []
-    for k, v in models.items():
-        if name in k:
-            dic.append(k)
-    if len(dic) == 0:
-        print("无匹配项")
-    elif len(dic) == 1:
-        if key in models[dic[0]]:
-            models[dic[0]][key] = value
-            with open("models.py", 'w+') as fi:
-                fi.write('models = %s' % str(models))
-                fi.close()
-            print("修改成功")
-        else:
-            print("修改项不存在")
-    else:
-        re_string = "匹配数超过一："
-        for st in dic:
-            re_string += '%s, ' % st
-        print(re_string)
+class XmindLeap:
+    def __init__(self, path, dic):
+        self.path = path
+        self.dic = dic
+        self.content = xmindparser.xmind_to_dict(self.path)
+        self.real_content = self.content[0]['topic']
+
+    def modify_model(self, replace_dic, replace_key=None, replace_value=None):
+        for key, value in replace_dic.items():
+            if key == replace_key:
+                replace_dic[key] = replace_value
+            elif isinstance(value, dict):
+                self.modify_model(value, replace_key, replace_value)
+
+    def sub_topic_title(self, content, dic=None):
+        if dic is None:
+            dic = {}
+        for i in content['topics']:
+            if 'note' in i:
+                if 'list' in i['note']:
+                    for key, value in translate_dict.items():
+                        if value == i['title']:
+                            i['title'] = key
+                    dic[i['title']] = []
+                    if "topics" in i:
+                        for j in i['topics']:
+                            for k, v in translate_dict.items():
+                                if v == j['title']:
+                                    j['title'] = k
+                            dic[i['title']].append(j['title'])
+            else:
+                for k, v in translate_dict.items():
+                    if v == i['title']:
+                        i['title'] = k
+                dic[i['title']] = {}
+                if "topics" in i:
+                    self.sub_topic_title(i, dic[i['title']])
+        return dic
+
+    def replace_model(self, name, dic, path):
+        self.dic[name] = dic
+        with open(path, 'w+', encoding='utf-8') as f:
+            f.write(str(models))
+
+    def case_leap(self, name, path='./models_copy.py'):
+        dic = self.sub_topic_title(self.real_content)
+        self.replace_model(name, dic, path)
 
 
-def replace_model(name, dic):
-    res = {}
-    res[name] = dic
-    # models[name] = dic
-    with open("./models_copy.py", 'w+', encoding='utf-8') as f:
-        # f.write(str(models))
-        f.write(str(res))
-        f.close()
-
-
-# replace_model("1c11c", "{}")
-# modify_model("工单流程", "type", ["1", "2", "3"])
+a = XmindLeap("xmind_files/title.xmind", models)
+a.case_leap("xixixixixi")

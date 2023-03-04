@@ -38,5 +38,8 @@ translate_dict = {
     "data_type": "数据类型解析",
     "app_view": "组件、数据耦合页面视图",
     "app_model": "组件模型",
-    "app_presenter": "数据处理"
+    "app_presenter": "数据处理",
+    "interface": "作为被引用模块关注点",
+    "special": "特殊验证点",
+    "exec": "执行类接口"
 }
