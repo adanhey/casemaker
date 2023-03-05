@@ -84,7 +84,7 @@ class CaseType(XmindMaker):
         print("保存成功")
 
 
-cases = CaseType("改动点", "%stest.xmind" % now, "%stest.xmind" % now, models, "工单配置-流程节点")
+cases = CaseType("改动点", "%stest.xmind" % now, "./xmind_files/%stest.xmind" % now, models, "工单配置-流程节点")
 cases.make_case()
 
 # cases = CaseType("公共用例", "公共用例.xmind", "公共用例.xmind", public_case)
