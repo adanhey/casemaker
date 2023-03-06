@@ -4,11 +4,9 @@ import xmindparser
 
 
 class XmindLeap:
-    def __init__(self, path, dic):
-        self.path = path
+    def __init__(self, dic, **kwargs):
         self.dic = dic
-        self.content = xmindparser.xmind_to_dict(self.path)
-        self.real_content = self.content[0]['topic']
+        self.path_dict = kwargs
 
     def modify_model(self, replace_dic, replace_key=None, replace_value=None):
         for key, value in replace_dic.items():
@@ -42,15 +40,19 @@ class XmindLeap:
                     self.sub_topic_title(i, dic[i['title']])
         return dic
 
-    def replace_model(self, name, dic, path):
-        self.dic[name] = dic
+    def replace_model(self, path):
         with open(path, 'w+', encoding='utf-8') as f:
-            f.write("models = %s" % str(models).replace("'", '"'))
+            f.write("models = %s" % str(self.dic).replace("'", '"'))
 
-    def case_leap(self, name, path='./dict_dir/models_copy.py'):
-        dic = self.sub_topic_title(self.real_content)
-        self.replace_model(name, dic, path)
+    def case_leap(self, save_path='./dict_dir/models_copy.py'):
+        for key, path in self.path_dict.items():
+            content = xmindparser.xmind_to_dict(path)
+            real_content = content[0]['topic']
+            dic = self.sub_topic_title(real_content)
+            self.dic[key] = dic
+        with open(save_path, 'w+', encoding='utf-8') as f:
+            f.write("models = %s" % str(self.dic).replace("'", '"'))
 
 
-a = XmindLeap("xmind_files/save_dir/个人使用记录.xmind", models)
-a.case_leap("个人使用记录")
+a = XmindLeap(models, 个人使用记录="xmind_files/save_dir/个人使用记录.xmind", 备件出库="xmind_files/save_dir/备件出库.xmind")
+a.case_leap()
