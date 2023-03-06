@@ -12,26 +12,13 @@ class CaseType(XmindMaker):
         self.name = name
         self.dic = dic
         self.root_topic = self.add_topic("root", requirement_name)
-        if self.name in self.dic.keys():
-            self.index_dict = self.dic[self.name]
-            self.quote = self.index_dict['quote']
-            self.quoted = self.index_dict['quoted']
+        self.index_dict = self.dic[self.name]
+        self.quote = self.index_dict['quote']
+        self.quoted = self.index_dict['quoted']
 
     def quote_maker(self):
         quote_topic = self.add_topic(self.root_topic, "quote")
-        for key, value in self.quote.items():
-            if key in self.dic.keys():
-                search_dict = models[key]
-                quote2_topic = self.add_topic(quote_topic, key)
-                for obj in value:
-                    self.add_topic(quote2_topic, obj)
-                if "interface" in search_dict:
-                    quote3_topic = self.add_topic(quote2_topic, "interface")
-                    for i in search_dict['interface']:
-                        self.add_topic(quote3_topic, i)
-                self.special_maker(key, quote2_topic)
-            else:
-                return "引用模块%s不存在" % key
+        self.round_maker(quote_topic, self.quote)
 
     def quoted_maker(self):
         quoted_topic = self.add_topic(self.root_topic, "quoted")
@@ -42,13 +29,13 @@ class CaseType(XmindMaker):
                 self.add_topic(special_topic, i)
             dic = self.dic[key]
             self.round_maker(child_topic, dic)
-            # self.own_maker(key, child_topic)
 
     def special_maker(self, name, parent_topic):
         add_dict = models[name]
         special_topic = self.add_topic(parent_topic, "module_special_check")
-        for special in add_dict['special']:
-            self.add_topic(special_topic, special)
+        if "special" in add_dict:
+            for special in add_dict['special']:
+                self.add_topic(special_topic, special)
 
     def own_maker(self, name, topic):
         self.round_maker(topic, self.dic[name]['type'])

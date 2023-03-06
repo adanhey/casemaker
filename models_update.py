@@ -45,12 +45,12 @@ class XmindLeap:
     def replace_model(self, name, dic, path):
         self.dic[name] = dic
         with open(path, 'w+', encoding='utf-8') as f:
-            f.write(str(models))
+            f.write("models = %s" % str(models).replace("'", '"'))
 
     def case_leap(self, name, path='./dict_dir/models_copy.py'):
         dic = self.sub_topic_title(self.real_content)
         self.replace_model(name, dic, path)
 
 
-a = XmindLeap("xmind_files/title.xmind", models)
-a.case_leap("xixixixixi")
+a = XmindLeap("xmind_files/save_dir/个人使用记录.xmind", models)
+a.case_leap("个人使用记录")
