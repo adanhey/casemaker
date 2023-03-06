@@ -18,6 +18,9 @@ class CaseType(XmindMaker):
 
     def quote_maker(self):
         quote_topic = self.add_topic(self.root_topic, "quote")
+        for key, value in self.quote.items():
+            if key in self.dic:
+                self.quote[key] = self.dic[key]['interface']
         self.round_maker(quote_topic, self.quote)
 
     def quoted_maker(self):
@@ -27,8 +30,9 @@ class CaseType(XmindMaker):
             special_topic = self.add_topic(child_topic, 'important_check')
             for i in value:
                 self.add_topic(special_topic, i)
-            dic = self.dic[key]
-            self.round_maker(child_topic, dic)
+            if key in self.dic.keys():
+                dic = self.dic[key]['type']
+                self.round_maker(child_topic, dic)
 
     def special_maker(self, name, parent_topic):
         add_dict = models[name]
@@ -71,7 +75,7 @@ class CaseType(XmindMaker):
         print("保存成功")
 
 
-cases = CaseType("改动点", "%stest.xmind" % now, "./xmind_files/%stest.xmind" % now, models, "工单配置-流程节点")
+cases = CaseType("改动点", "%stest.xmind" % now, "./xmind_files/%stest.xmind" % now, models, "工单池员工管理")
 cases.make_case()
 
 # cases = CaseType("公共用例", "公共用例.xmind", "公共用例.xmind", public_case)
