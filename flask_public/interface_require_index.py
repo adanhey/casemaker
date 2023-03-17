@@ -1,0 +1,3 @@
+interfaceRequire = {
+    "/createProject": ['name']
+}

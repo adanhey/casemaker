@@ -1,0 +1,3 @@
+interfaceTableIndex = {
+    "/createProject": "Project"
+}

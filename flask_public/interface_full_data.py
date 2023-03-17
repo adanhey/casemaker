@@ -1,0 +1,3 @@
+interfaceFullData = {
+    "/createProject": ['name']
+}
