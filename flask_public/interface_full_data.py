@@ -1,3 +1,5 @@
 interfaceFullData = {
-    "/createProject": ['name']
+    "/createProject": ['name'],
+    "/updateProject": ['name'],
+    "/": []
 }

@@ -1,3 +1,6 @@
 interfaceTableIndex = {
-    "/createProject": "Project"
+    "/createProject": "Project",
+    "/updateProject": "Project",
+    "/deleteProject": "Project",
+    "/": []
 }

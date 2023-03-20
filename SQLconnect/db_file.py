@@ -14,6 +14,7 @@ class Project(db.Model):
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class ModelPart(db.Model):
@@ -21,8 +22,10 @@ class ModelPart(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     project_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(50), nullable=False)
-    quote = db.Column(db.String(50), nullable=False)
-    quoted = db.Column(db.String(50), nullable=False)
+    quote = db.Column(db.JSON, nullable=False)
+    quoted = db.Column(db.JSON, nullable=False)
+    module_special_check = db.Column(db.JSON, nullable=False)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class ServerSideData(db.Model):
@@ -30,6 +33,7 @@ class ServerSideData(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class InterfaceSetting(db.Model):
@@ -37,6 +41,7 @@ class InterfaceSetting(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class ClientServer(db.Model):
@@ -44,6 +49,7 @@ class ClientServer(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class WebClient(db.Model):
@@ -51,6 +57,7 @@ class WebClient(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class AppClient(db.Model):
@@ -58,6 +65,7 @@ class AppClient(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class IotDataCollect(db.Model):
@@ -65,6 +73,7 @@ class IotDataCollect(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
 
 
 class IotDataIssue(db.Model):
@@ -72,3 +81,13 @@ class IotDataIssue(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modelPartId = db.Column(db.Integer, nullable=False)
     jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
+
+
+class PublicCase(db.Model):
+    __tablename__ = 'publicCase'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    project_id = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)

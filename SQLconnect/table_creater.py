@@ -85,6 +85,14 @@ db = SQLAlchemy(app)
 #     jsonData = db.Column(db.JSON, nullable=True)
 #     storage_time = db.Column(db.DateTime, default=datetime.now)
 
+class PublicCase(db.Model):
+    __tablename__ = 'publicCase'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    project_id = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    jsonData = db.Column(db.JSON, nullable=True)
+    storage_time = db.Column(db.DateTime, default=datetime.now)
+
 
 if __name__ == '__main__':
     # 删除数据库下的所有上述定义的表，防止重复创建

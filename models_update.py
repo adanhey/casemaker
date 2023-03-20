@@ -53,20 +53,24 @@ class XmindLeap:
         with open(save_path, 'w+', encoding='utf-8') as f:
             f.write("models = %s" % str(self.dic).replace("'", '"'))
 
+    def interface_content(self, file):
+        content = xmindparser.xmind_to_dict(file)
+        # real_content = content[0]['topic']
+        return content
 
-a = XmindLeap(models, 备件出库="xmind_files/save_dir/备件出库.xmind", 仓库管理="xmind_files/save_dir/仓库管理.xmind",
-              备件类型管理="xmind_files/save_dir/备件类型管理.xmind", 备件管理="xmind_files/save_dir/备件管理.xmind",
-              备件入库="xmind_files/save_dir/备件入库.xmind", 备件配置="xmind_files/save_dir/备件配置.xmind",
-              个人备件操作="xmind_files/save_dir/个人备件操作.xmind",
-              个人备件清单="xmind_files/save_dir/个人备件清单.xmind",
-              个人使用记录="xmind_files/save_dir/个人使用记录.xmind",
-              工单超时配置="xmind_files/save_dir/工单超时配置.xmind",
-              工单池工单="xmind_files/save_dir/工单池工单.xmind", 工单池管理="xmind_files/save_dir/工单池管理.xmind",
-              工单池员工管理="xmind_files/save_dir/工单池员工管理.xmind",
-              工单节点配置="xmind_files/save_dir/工单节点配置.xmind",
-              工单类型管理="xmind_files/save_dir/工单类型管理.xmind",
-              工单流转规则="xmind_files/save_dir/工单流转规则.xmind",
-              工单预警配置="xmind_files/save_dir/工单预警配置.xmind",
-              供应商管理="xmind_files/save_dir/供应商管理.xmind",
-              回访配置="xmind_files/save_dir/回访配置.xmind",库位管理及库存="xmind_files/save_dir/库位管理及库存.xmind")
-a.case_leap()
+# a = XmindLeap(models, 备件出库="xmind_files/save_dir/备件出库.xmind", 仓库管理="xmind_files/save_dir/仓库管理.xmind",
+#               备件类型管理="xmind_files/save_dir/备件类型管理.xmind", 备件管理="xmind_files/save_dir/备件管理.xmind",
+#               备件入库="xmind_files/save_dir/备件入库.xmind", 备件配置="xmind_files/save_dir/备件配置.xmind",
+#               个人备件操作="xmind_files/save_dir/个人备件操作.xmind",
+#               个人备件清单="xmind_files/save_dir/个人备件清单.xmind",
+#               个人使用记录="xmind_files/save_dir/个人使用记录.xmind",
+#               工单超时配置="xmind_files/save_dir/工单超时配置.xmind",
+#               工单池工单="xmind_files/save_dir/工单池工单.xmind", 工单池管理="xmind_files/save_dir/工单池管理.xmind",
+#               工单池员工管理="xmind_files/save_dir/工单池员工管理.xmind",
+#               工单节点配置="xmind_files/save_dir/工单节点配置.xmind",
+#               工单类型管理="xmind_files/save_dir/工单类型管理.xmind",
+#               工单流转规则="xmind_files/save_dir/工单流转规则.xmind",
+#               工单预警配置="xmind_files/save_dir/工单预警配置.xmind",
+#               供应商管理="xmind_files/save_dir/供应商管理.xmind",
+#               回访配置="xmind_files/save_dir/回访配置.xmind",库位管理及库存="xmind_files/save_dir/库位管理及库存.xmind")
+# a.case_leap()
