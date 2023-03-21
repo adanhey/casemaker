@@ -90,7 +90,8 @@ def get_model_xmind():
 @permission
 def import_public_case():
     sub_dic = {}
-    result = PublicCase.query.filter().all()
+    project_id = request.args.get("project_id")
+    result = PublicCase.query.filter(PublicCase.project_id == project_id).all()
     for i in result:
         sub_dic[i.name] = i.jsonData
     now = datetime.now().strftime('%Y%m%d%H%M%S')
@@ -123,7 +124,7 @@ def delete_model():
 @app.route('/listModel', methods=['GET'])
 @permission
 def list_model():
-    select_pam = ['name']
+    select_pam = ['name', 'project_id']
     select_str = ""
     for pam in select_pam:
         exec(f"{pam} = request.args.get('{pam}')")

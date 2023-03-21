@@ -1,6 +1,7 @@
 from flask_public.flask_public import *
 from SQLconnect.db_file import *
 
+
 @app.route('/createPublicCase', methods=['POST'])
 @permission
 @requires
@@ -52,7 +53,9 @@ def delete_public_case():
 @app.route('/listPublicCase', methods=['GET'])
 @permission
 def get_public_case():
-    select_pam = ['name']
+    if not request.args.get('project_id'):
+        return {"message": f"缺失项目id"}, 400
+    select_pam = ['name', 'project_id']
     select_str = ""
     for pam in select_pam:
         exec(f"{pam} = request.args.get('{pam}')")
