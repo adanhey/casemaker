@@ -2,7 +2,7 @@ import os
 from flask_public.flask_public import *
 from SQLconnect.db_file import *
 from models_update import *
-from table_index import table_index
+from SQLconnect.table_index import table_index
 from xmind_maker import XmindMaker
 
 
@@ -86,6 +86,23 @@ def get_model_xmind():
     return re_file
 
 
+@app.route('/importPublicCase', methods=['GET'])
+@permission
+def import_public_case():
+    sub_dic = {}
+    result = PublicCase.query.filter().all()
+    for i in result:
+        sub_dic[i.name] = i.jsonData
+    now = datetime.now().strftime('%Y%m%d%H%M%S')
+    maker = XmindMaker("%stest.xmind" % now, "./%stest.xmind" % now)
+    maker.add_topic('root', "公共用例")
+    make_xmind(maker, sub_dic, maker.sheet.getRootTopic())
+    maker.xmind_save()
+    f = open(maker.path, 'rb')
+    re_file = f
+    return re_file
+
+
 @app.route('/deleteModel', methods=['DELETE'])
 @permission
 def delete_model():
@@ -103,11 +120,42 @@ def delete_model():
     return "删除成功"
 
 
+@app.route('/listModel', methods=['GET'])
+@permission
+def list_model():
+    select_pam = ['name']
+    select_str = ""
+    for pam in select_pam:
+        exec(f"{pam} = request.args.get('{pam}')")
+        if eval(f"{pam}"):
+            select_str += f"ModelPart.{pam} == {pam}"
+    result = eval(f"ModelPart.query.filter({select_str}).all()")
+    res = []
+    for i in result:
+        mid_dic = {}
+        for key, value in i.__dict__.items():
+            if key == '_sa_instance_state':
+                pass
+            elif isinstance(value, datetime):
+                mid_dic[key] = str(value)
+            else:
+                mid_dic[key] = value
+        res.append(mid_dic)
+    return {"查询结果": res}
+
+
 def make_xmind(maker, dic, topic):
-    for key, value in dic.items():
-        child_topic = maker.add_topic(topic, key)
-        if isinstance(value, dict):
-            make_xmind(maker, value, child_topic)
+    if isinstance(dic, dict):
+        for key, value in dic.items():
+            child_topic = maker.add_topic(topic, key)
+            if isinstance(value, dict) or isinstance(value, list):
+                make_xmind(maker, value, child_topic)
+    elif isinstance(dic, list):
+        for obj in dic:
+            if isinstance(obj, dict) or isinstance(obj, list):
+                make_xmind(maker, obj, topic)
+            else:
+                maker.add_topic(topic, obj)
 
 
 def save_cases(content_dic, model_id, update=None):

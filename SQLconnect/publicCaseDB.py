@@ -1,9 +1,5 @@
 from flask_public.flask_public import *
 from SQLconnect.db_file import *
-from models_update import *
-from table_index import table_index
-from xmind_maker import XmindMaker
-
 
 @app.route('/createPublicCase', methods=['POST'])
 @permission
@@ -43,14 +39,38 @@ def update_public_case():
 
 @app.route('/deletePublicCase', methods=['DELETE'])
 @permission
-def delete_model():
-    case_id = request.form.get('id')
+def delete_public_case():
+    case_id = request.args.get('id')
     if not PublicCase.query.filter(PublicCase.id == case_id).first():
         return {"message": f"项目id：{case_id}不存在"}, 404
-    case1 = ModelPart.query.filter(ModelPart.id == case_id).first()
+    case1 = PublicCase.query.filter(PublicCase.id == case_id).first()
     db.session.delete(case1)
     db.session.commit()
-    return "删除成功"
+    return {"message": "删除成功"}
+
+
+@app.route('/listPublicCase', methods=['GET'])
+@permission
+def get_public_case():
+    select_pam = ['name']
+    select_str = ""
+    for pam in select_pam:
+        exec(f"{pam} = request.args.get('{pam}')")
+        if eval(f"{pam}"):
+            select_str += f"PublicCase.{pam} == {pam}"
+    result = eval(f"PublicCase.query.filter({select_str}).all()")
+    res = []
+    for i in result:
+        mid_dic = {}
+        for key, value in i.__dict__.items():
+            if key == '_sa_instance_state':
+                pass
+            elif isinstance(value, datetime):
+                mid_dic[key] = str(value)
+            else:
+                mid_dic[key] = value
+        res.append(mid_dic)
+    return {"查询结果": res}
 
 
 if __name__ == "__main__":

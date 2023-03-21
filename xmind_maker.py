@@ -3,10 +3,11 @@ from dict_dir.translate_index import translate_dict
 
 
 class XmindMaker:
-    def __init__(self, filename, path, title=None):
+    def __init__(self, filename, path, title=None, public_dic=None):
         self.workbook = xmind.load(filename)
         self.sheet = self.workbook.getPrimarySheet()
         self.path = path
+        self.public_dic = public_dic
         if title:
             self.sheet.setTitle(title)
 
@@ -23,6 +24,11 @@ class XmindMaker:
             topic.setTitle(title)
         if note:
             topic.setPlainNotes(note)
+        if self.public_dic:
+            for key, value in self.public_dic.items():
+                if key == title:
+                    for s in value:
+                        self.add_topic(topic, s)
         return topic
 
     def set_note(self, topic, note):

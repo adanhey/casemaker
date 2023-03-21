@@ -26,6 +26,7 @@ class ModelPart(db.Model):
     quoted = db.Column(db.JSON, nullable=False)
     module_special_check = db.Column(db.JSON, nullable=False)
     storage_time = db.Column(db.DateTime, default=datetime.now)
+    be_quote = db.Column(db.JSON, nullable=False)
 
 
 class ServerSideData(db.Model):
